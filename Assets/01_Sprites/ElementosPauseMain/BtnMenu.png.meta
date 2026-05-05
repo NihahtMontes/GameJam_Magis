@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: e1bd86df55cfe364ba858faf42e83480
+guid: f877c51a5ee6af34c8c8a0d347ac1168
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4885258842141113512
-    second: SlidesVolumen_0
-  - first:
-      213: -6443502586857046270
-    second: SlidesVolumen_1
-  - first:
-      213: -3597164574453774463
-    second: SlidesVolumen_2
+      213: 4026742002731741717
+    second: BtnMenu_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlidesVolumen_0
+      name: BtnMenu_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 69
-        width: 35
-        height: 9
+        x: 20
+        y: 26
+        width: 58
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,52 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 853c75e57f2143cb0800000000000000
-      internalID: -4885258842141113512
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SlidesVolumen_1
-      rect:
-        serializedVersion: 2
-        x: 70
-        y: 67
-        width: 8
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 20f331159841496a0800000000000000
-      internalID: -6443502586857046270
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SlidesVolumen_2
-      rect:
-        serializedVersion: 2
-        x: 31
-        y: 51
-        width: 35
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 187401dc0ed441ec0800000000000000
-      internalID: -3597164574453774463
+      spriteID: 51278f2548cd1e730800000000000000
+      internalID: 4026742002731741717
       vertices: []
       indices: 
       edges: []
@@ -185,9 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlidesVolumen_0: -4885258842141113512
-      SlidesVolumen_1: -6443502586857046270
-      SlidesVolumen_2: -3597164574453774463
+      BtnMenu_0: 4026742002731741717
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
