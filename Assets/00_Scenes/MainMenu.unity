@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &266922894
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5617783010732886555, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_Name
+      value: GestorMusica
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 377.25052
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 191.56406
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134487729887123818, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2a3d221d87273c84495aaa0360d0b865, type: 3}
 --- !u!1 &497364464
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +695,18 @@ MonoBehaviour:
       - m_Target: {fileID: 875861222}
         m_TargetAssemblyTypeName: ControladorMenu, Assembly-CSharp
         m_MethodName: IrAlJuego
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 875861222}
+        m_TargetAssemblyTypeName: ControladorMenu, Assembly-CSharp
+        m_MethodName: ReproducirSonidoBoton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1374,7 +1443,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1767027025}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 875861222}
+        m_TargetAssemblyTypeName: ControladorMenu, Assembly-CSharp
+        m_MethodName: ReproducirSonidoBoton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1767027025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1495,7 +1576,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1853151264}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 875861222}
+        m_TargetAssemblyTypeName: ControladorMenu, Assembly-CSharp
+        m_MethodName: ReproducirSonidoBoton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1853151264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1680,3 +1773,4 @@ SceneRoots:
   - {fileID: 875861223}
   - {fileID: 497364467}
   - {fileID: 1565779852}
+  - {fileID: 266922894}
