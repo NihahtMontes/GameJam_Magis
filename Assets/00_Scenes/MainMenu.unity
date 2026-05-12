@@ -855,8 +855,8 @@ MonoBehaviour:
   dropdownCalidad: {fileID: 0}
   togglePantallaCompleta: {fileID: 0}
   sliderAudio: {fileID: 0}
-  altavozSFX: {fileID: 0}
-  sonidoClic: {fileID: 0}
+  altavozSFX: {fileID: 520160877}
+  sonidoClic: {fileID: 8300000, guid: 0052b0c45b896634fbfcbbfba6a95f9f, type: 3}
   grupoOpciones: {fileID: 0}
   panelInventario: {fileID: 0}
 --- !u!224 &875861223
