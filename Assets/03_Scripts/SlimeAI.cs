@@ -5,9 +5,13 @@ public enum TipoSlime { Agua, Tierra, Viento, Fuego }
 public class SlimeAI : MonoBehaviour
 {
     public TipoSlime tipo;
-    public int resistenciaCaptura = 3;
+    public int resistenciaCaptura = 1;
     public float velocidad = 2f;
     public float distanciaDeteccion = 4f;
+
+    [Header("Referencia para el Corral")]
+    public GameObject prefabCorralCorrespondiente; // Arrastra aquí el prefab que irá al corral
+
     private Transform jugador;
 
     void Start()
@@ -25,20 +29,21 @@ public class SlimeAI : MonoBehaviour
         if (distancia < distanciaDeteccion)
         {
             if (tipo == TipoSlime.Viento || tipo == TipoSlime.Fuego)
-                Atacar();
+                Atacar(); // Raros/Super Raros atacan [cite: 204]
             else
-                Huir();
+                Huir(); // Comunes se escapan [cite: 204]
         }
     }
 
-    public void RecibirIntentoCaptura()
+    public bool RecibirIntentoCaptura()
     {
         resistenciaCaptura--;
         if (resistenciaCaptura <= 0)
         {
             Destroy(gameObject);
-            Debug.Log("Slime Capturado!");
+            return true;
         }
+        return false;
     }
 
     void Huir()

@@ -50,6 +50,7 @@ MonoBehaviour:
   resistenciaCaptura: 2
   velocidad: 2
   distanciaDeteccion: 4
+  prefabCorralCorrespondiente: {fileID: 8108885678590885969, guid: 9e34bf760ed2b044db4f9f47fe7072ed, type: 3}
 --- !u!212 &8061077545988933295
 SpriteRenderer:
   serializedVersion: 2
