@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro; // Para compatibilidad con TextMeshPro
-using System.Collections.Generic; // Para usar Listas
+using TMPro;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask capaSlimes;
 
     [Header("Inventario y UI")]
-    public List<GameObject> inventarioSlimes = new List<GameObject>(); // Lista de slimes guardados
+    public List<GameObject> inventarioSlimes = new List<GameObject>();
     public int slimesEnCorralTotal = 0;
     public TextMeshProUGUI textoInventario;
     public TextMeshProUGUI textoCorral;
@@ -27,9 +27,18 @@ public class PlayerController : MonoBehaviour
     private bool estaEnPortal = false;
     private string nombreEscenaDestino;
 
+    [Header("Audio")]
+    public AudioSource fuenteAudio;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        if (fuenteAudio == null)
+        {
+            fuenteAudio = GetComponent<AudioSource>();
+        }
+
         ActualizarInterfaz();
     }
 
@@ -37,6 +46,8 @@ public class PlayerController : MonoBehaviour
     {
         movimiento.x = Input.GetAxisRaw("Horizontal");
         movimiento.y = Input.GetAxisRaw("Vertical");
+
+        GestionarSonidoCaminata();
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -63,14 +74,15 @@ public class PlayerController : MonoBehaviour
         if (hit.collider != null && hit.collider.CompareTag("Slime"))
         {
             float distancia = Vector2.Distance(transform.position, hit.collider.transform.position);
+
             if (distancia <= rangoCaptura)
             {
                 SlimeAI slime = hit.collider.GetComponent<SlimeAI>();
+
                 if (slime != null)
                 {
                     if (slime.RecibirIntentoCaptura())
                     {
-                        // Guardamos el prefab específico de este slime para el corral
                         inventarioSlimes.Add(slime.prefabCorralCorrespondiente);
                         ActualizarInterfaz();
                     }
@@ -89,8 +101,22 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Portal"))
         {
             estaEnPortal = true;
+
             TeleportPortal portal = other.GetComponent<TeleportPortal>();
-            if (portal != null) nombreEscenaDestino = portal.nombreEscenaDestino;
+
+            if (portal != null)
+            {
+                nombreEscenaDestino = portal.nombreEscenaDestino;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Portal"))
+        {
+            estaEnPortal = false;
+            nombreEscenaDestino = "";
         }
     }
 
@@ -101,19 +127,35 @@ public class PlayerController : MonoBehaviour
             Instantiate(prefab, puntoAparicionCorral.position, Quaternion.identity);
             slimesEnCorralTotal++;
         }
-        inventarioSlimes.Clear(); // Vaciamos la lista tras soltarlos
+
+        inventarioSlimes.Clear();
         ActualizarInterfaz();
+    }
+
+    void ActualizarInterfaz()
+    {
+        if (textoInventario != null)
+        {
+            textoInventario.text = "Inventario: " + inventarioSlimes.Count;
+        }
+
+        if (textoCorral != null)
+        {
+            textoCorral.text = "Corral: " + slimesEnCorralTotal;
+        }
     }
 
     private void GestionarSonidoCaminata()
     {
         bool seEstaMoviendo = movimiento.sqrMagnitude > 0.01f;
 
+        if (fuenteAudio == null) return;
+
         if (seEstaMoviendo)
         {
             if (!fuenteAudio.isPlaying)
             {
-                fuenteAudio.loop = true; 
+                fuenteAudio.loop = true;
                 fuenteAudio.Play();
             }
         }
