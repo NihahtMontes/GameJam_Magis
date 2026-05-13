@@ -1,34 +1,25 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; // Necesario para cambiar de escena
 
 public class TeleportPortal : MonoBehaviour
 {
-    [Header("Configuración de Destino")]
-    [Tooltip("El nombre exacto de la escena a la que quieres ir")]
-    public string nombreEscenaDestino = "Inferno";
-
-    [Header("Interacción")]
-    public KeyCode teclaInteractuar = KeyCode.F;
-
-    [Header("Efectos (Opcional)")]
-    public GameObject efectoVisual; // Por si quieres instanciar chispas al entrar
-
-    [Header("Sonidos")]
-    public AudioSource audioViaje;
+    [Header("Configuración del Portal")]
+    public string nombreEscenaDestino = "Inferno"; // El nombre debe ser exacto a tu escena
+    public KeyCode teclaInteractuar = KeyCode.F; // La tecla para viajar
 
     private bool jugadorEstaCerca = false;
 
+    // Se activa cuando el jugador entra en el área del portal
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Verificamos que sea el jugador
         if (collision.CompareTag("Player"))
         {
             jugadorEstaCerca = true;
-            // Un mensaje en consola para confirmar que el trigger funciona
-            Debug.Log($"[Portal] Presiona {teclaInteractuar} para entrar a {nombreEscenaDestino}");
+            Debug.Log("Jugador cerca del portal. Presiona " + teclaInteractuar + " para viajar.");
         }
     }
 
+    // Se activa cuando el jugador sale del área del portal
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -39,33 +30,17 @@ public class TeleportPortal : MonoBehaviour
 
     void Update()
     {
-        // Detectar la tecla solo si el jugador está dentro del área
+        // Si el jugador está cerca y presiona la tecla F
         if (jugadorEstaCerca && Input.GetKeyDown(teclaInteractuar))
         {
             ViajarAEscena();
-            
         }
     }
 
     public void ViajarAEscena()
     {
-        if (!string.IsNullOrEmpty(nombreEscenaDestino))
-        {
-            // 1. Verificamos que el audio existe
-            if (audioViaje != null && audioViaje.clip != null)
-            {
-                // 2. PlayClipAtPoint crea un objeto de audio en el mundo 
-                // que NO depende de este portal. Sobrevive al cambio de escena.
-                AudioSource.PlayClipAtPoint(audioViaje.clip, transform.position);
-
-                Debug.Log("Sonido de teletransporte enviado al motor de audio.");
-            }
-
-            // 3. Cambiamos de escena inmediatamente
-            Time.timeScale = 1f;
-            SceneManager.LoadScene(nombreEscenaDestino);
-        }
+        // Asegúrate de que el tiempo no esté pausado (por si vienes del menú)
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(nombreEscenaDestino);
     }
-
-   
 }

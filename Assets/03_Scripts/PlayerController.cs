@@ -27,9 +27,6 @@ public class PlayerController : MonoBehaviour
     private bool estaEnPortal = false;
     private string nombreEscenaDestino;
 
-    [Header("elementos personaje")]
-    public AudioSource fuenteAudio;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,8 +47,6 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(nombreEscenaDestino);
         }
-
-        GestionarSonidoCaminata();
     }
 
     void FixedUpdate()
@@ -108,27 +103,6 @@ public class PlayerController : MonoBehaviour
         }
         inventarioSlimes.Clear(); // Vaciamos la lista tras soltarlos
         ActualizarInterfaz();
-    }
-
-    private void GestionarSonidoCaminata()
-    {
-        bool seEstaMoviendo = movimiento.sqrMagnitude > 0.01f;
-
-        if (seEstaMoviendo)
-        {
-            if (!fuenteAudio.isPlaying)
-            {
-                fuenteAudio.loop = true; 
-                fuenteAudio.Play();
-            }
-        }
-        else
-        {
-            if (fuenteAudio.isPlaying)
-            {
-                fuenteAudio.Stop();
-            }
-        }
     }
 
     private void GestionarSonidoCaminata()
