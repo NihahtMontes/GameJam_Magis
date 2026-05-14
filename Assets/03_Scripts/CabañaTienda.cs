@@ -26,6 +26,8 @@ public class CabanaTienda : MonoBehaviour
             if (!tiendaCerradaManual)
             {
                 panelOpciones.SetActive(true);
+                panelComprar.SetActive(false);
+                panelVender.SetActive(false);
             }
         }
     }
@@ -48,9 +50,10 @@ public class CabanaTienda : MonoBehaviour
         if (!jugadorCerca) return;
 
         tiendaCerradaManual = false;
-        panelOpciones.SetActive(true);
-        panelComprar.SetActive(true);
-        panelVender.SetActive(false);
+
+        panelOpciones.SetActive(false); // se cierra el panel de opciones
+        panelComprar.SetActive(true);   // se abre comprar
+        panelVender.SetActive(false);   // se cierra vender
     }
 
     public void AbrirVender()
@@ -58,19 +61,30 @@ public class CabanaTienda : MonoBehaviour
         if (!jugadorCerca) return;
 
         tiendaCerradaManual = false;
-        panelOpciones.SetActive(true);
-        panelComprar.SetActive(false);
-        panelVender.SetActive(true);
+
+        panelOpciones.SetActive(false); // se cierra el panel de opciones
+        panelComprar.SetActive(false);  // se cierra comprar
+        panelVender.SetActive(true);    // se abre vender
     }
 
     public void CerrarComprar()
     {
         panelComprar.SetActive(false);
+
+        if (jugadorCerca && !tiendaCerradaManual)
+        {
+            panelOpciones.SetActive(true);
+        }
     }
 
     public void CerrarVender()
     {
         panelVender.SetActive(false);
+
+        if (jugadorCerca && !tiendaCerradaManual)
+        {
+            panelOpciones.SetActive(true);
+        }
     }
 
     public void SalirTienda()
