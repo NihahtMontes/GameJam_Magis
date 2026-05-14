@@ -26,5 +26,9 @@ public class InventarioItems : MonoBehaviour
         {
             textoBifrost.text = bifrost.ToString();
         }
+        else
+        {
+            Debug.LogWarning("[INVENTARIO ITEMS] textoBifrost es NULL. Arrastra el TextMeshPro del inventario al campo 'Texto Bifrost'.");
+        }
     }
 }

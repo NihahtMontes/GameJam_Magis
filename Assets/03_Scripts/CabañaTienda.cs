@@ -154,17 +154,38 @@ public class CabanaTienda : MonoBehaviour
         {
             jugadorDinero.RestarOro(precio);
 
-            if (nombreItem == "Bifrost" && inventarioItems != null)
+            if (nombreItem == "Bifrost")
             {
-                inventarioItems.AgregarBifrost(1);
+                if (inventarioItems != null)
+                {
+                    inventarioItems.AgregarBifrost(1);
+                }
+                else
+                {
+                    Debug.LogWarning("[TIENDA] inventarioItems es NULL. Asigna Player al campo 'Inventario Items' en CabanaTienda.");
+                }
             }
-            else if (nombreItem == "Vida" && estadoJugadorUI != null)
+            else if (nombreItem == "Vida")
             {
-                estadoJugadorUI.RestaurarVida();
+                if (estadoJugadorUI != null)
+                {
+                    estadoJugadorUI.RestaurarVida();
+                }
+                else
+                {
+                    Debug.LogWarning("[TIENDA] estadoJugadorUI es NULL. Asigna Player al campo 'Estado Jugador UI' en CabanaTienda.");
+                }
             }
-            else if (nombreItem == "Mana" && estadoJugadorUI != null)
+            else if (nombreItem == "Mana")
             {
-                estadoJugadorUI.RestaurarMana();
+                if (estadoJugadorUI != null)
+                {
+                    estadoJugadorUI.RestaurarMana();
+                }
+                else
+                {
+                    Debug.LogWarning("[TIENDA] estadoJugadorUI es NULL. Asigna Player al campo 'Estado Jugador UI' en CabanaTienda.");
+                }
             }
 
             Debug.Log("Compraste " + nombreItem + " por " + precio + " oro.");
