@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlimeAI
   tipo: 3
-  resistenciaCaptura: 2
-  velocidad: 2
-  distanciaDeteccion: 4
+  resistenciaCaptura: 1
+  velocidad: 1
+  distanciaDeteccion: 2
   prefabCorralCorrespondiente: {fileID: 8108885678590885969, guid: 9e34bf760ed2b044db4f9f47fe7072ed, type: 3}
 --- !u!212 &8061077545988933295
 SpriteRenderer:

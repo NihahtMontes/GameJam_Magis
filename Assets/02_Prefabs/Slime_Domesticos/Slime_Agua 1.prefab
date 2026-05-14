@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4122457465082014117}
   - component: {fileID: 3649634454553540939}
   - component: {fileID: 3268954687930863424}
+  - component: {fileID: 5286027457298848842}
   m_Layer: 6
   m_Name: Slime_Agua 1
   m_TagString: Slime
@@ -47,6 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlimeCorral
   velocidad: 1
+  prefabCristal: {fileID: 1082016309363727360, guid: e279f91f83aea174582bdfb05da0d456, type: 3}
+  tipoSlime: 0
+  maxCristales: 4
+  tiempoGeneracionCristal: 5
 --- !u!212 &3649634454553540939
 SpriteRenderer:
   serializedVersion: 2
@@ -142,3 +147,30 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.013158798}
   m_Radius: 0.07529318
+--- !u!50 &5286027457298848842
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8322713636062934434}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

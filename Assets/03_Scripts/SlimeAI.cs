@@ -9,6 +9,11 @@ public class SlimeAI : MonoBehaviour
     public float velocidad = 2f;
     public float distanciaDeteccion = 4f;
 
+    [Header("Ataque")]
+    public float danioAtaque = 10f;
+    private float tiempoUltimoAtaque = 0f;
+    private float cooldownAtaque = 1.5f;
+
     [Header("Referencia para el Corral")]
     public GameObject prefabCorralCorrespondiente; // Arrastra aquí el prefab que irá al corral
 
@@ -56,5 +61,27 @@ public class SlimeAI : MonoBehaviour
     {
         Vector2 direccion = (jugador.position - transform.position).normalized;
         transform.Translate(direccion * (velocidad * 1.5f) * Time.deltaTime);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && (tipo == TipoSlime.Viento || tipo == TipoSlime.Fuego))
+        {
+            if (Time.time >= tiempoUltimoAtaque + cooldownAtaque)
+            {
+                tiempoUltimoAtaque = Time.time;
+                PlayerController.vidaActual -= danioAtaque;
+                
+                if (PlayerController.vidaActual < 0) 
+                    PlayerController.vidaActual = 0;
+                
+                PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+                if (player != null)
+                {
+                    player.ActualizarInterfaz();
+                    Debug.Log("¡El slime salvaje te atacó! Vida restante: " + PlayerController.vidaActual);
+                }
+            }
+        }
     }
 }
