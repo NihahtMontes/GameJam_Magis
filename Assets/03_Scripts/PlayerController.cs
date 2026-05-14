@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+    public static List<GameObject> inventarioSlimesPersistente = new List<GameObject>();
+    public static int slimesEnCorralTotalEstatico = 0;
+    public static int nivelCorral = 1;
+    public static int capacidadMaximaCorral = 10;
+
     [Header("Configuración de Movimiento")]
     public float velocidad = 5f;
     private Rigidbody2D rb;
@@ -19,6 +24,8 @@ public class PlayerController : MonoBehaviour
     public int slimesEnCorralTotal = 0;
     public TextMeshProUGUI textoInventario;
     public TextMeshProUGUI textoCorral;
+    public JugadorDinero jugadorDinero;
+    public InventarioCristales inventarioCristales;
 
     [Header("Referencias de Corral")]
     public Transform puntoAparicionCorral;
@@ -33,6 +40,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        inventarioSlimes = inventarioSlimesPersistente;
+        slimesEnCorralTotal = slimesEnCorralTotalEstatico;
 
         if (fuenteAudio == null)
         {
@@ -83,7 +92,12 @@ public class PlayerController : MonoBehaviour
                 {
                     if (slime.RecibirIntentoCaptura())
                     {
-                        inventarioSlimes.Add(slime.prefabCorralCorrespondiente);
+                        if (slime.prefabCorralCorrespondiente != null)
+                        {
+                            inventarioSlimesPersistente.Add(slime.prefabCorralCorrespondiente);
+                            inventarioSlimes = inventarioSlimesPersistente;
+                        }
+
                         ActualizarInterfaz();
                     }
                 }
@@ -96,6 +110,17 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Corral") && inventarioSlimes.Count > 0)
         {
             SoltarSlimesEnCorral();
+        }
+
+        if (other.CompareTag("Cristal"))
+        {
+            CristalDroplet cristal = other.GetComponent<CristalDroplet>();
+
+            if (cristal != null)
+            {
+                RecolectarCristal(cristal.tipo);
+                Destroy(other.gameObject);
+            }
         }
 
         if (other.CompareTag("Portal"))
@@ -122,13 +147,32 @@ public class PlayerController : MonoBehaviour
 
     void SoltarSlimesEnCorral()
     {
-        foreach (GameObject prefab in inventarioSlimes)
+        int slimesDepositados = 0;
+        List<GameObject> slimesSobrantes = new List<GameObject>();
+
+        foreach (GameObject prefab in inventarioSlimesPersistente)
         {
-            Instantiate(prefab, puntoAparicionCorral.position, Quaternion.identity);
-            slimesEnCorralTotal++;
+            if (slimesEnCorralTotalEstatico < capacidadMaximaCorral)
+            {
+                Instantiate(prefab, puntoAparicionCorral.position, Quaternion.identity);
+                slimesEnCorralTotalEstatico++;
+                slimesDepositados++;
+            }
+            else
+            {
+                slimesSobrantes.Add(prefab);
+            }
         }
 
-        inventarioSlimes.Clear();
+        inventarioSlimesPersistente = slimesSobrantes;
+        inventarioSlimes = inventarioSlimesPersistente;
+        slimesEnCorralTotal = slimesEnCorralTotalEstatico;
+
+        if (slimesDepositados == 0 && inventarioSlimesPersistente.Count > 0)
+        {
+            Debug.Log("El corral está lleno. Necesitas comprar el siguiente nivel.");
+        }
+
         ActualizarInterfaz();
     }
 
@@ -136,12 +180,42 @@ public class PlayerController : MonoBehaviour
     {
         if (textoInventario != null)
         {
-            textoInventario.text = "Inventario: " + inventarioSlimes.Count;
+            textoInventario.text = "Slimes: " + inventarioSlimesPersistente.Count;
         }
 
         if (textoCorral != null)
         {
-            textoCorral.text = "Corral: " + slimesEnCorralTotal;
+            textoCorral.text = "Corral: " + slimesEnCorralTotalEstatico;
+        }
+    }
+
+    public void RecolectarCristal(TipoSlime tipo)
+    {
+        if (inventarioCristales == null)
+        {
+            inventarioCristales = GetComponent<InventarioCristales>();
+        }
+
+        if (inventarioCristales == null)
+        {
+            Debug.LogWarning("No se asignó InventarioCristales en PlayerController.");
+            return;
+        }
+
+        switch (tipo)
+        {
+            case TipoSlime.Agua:
+                inventarioCristales.AgregarCristal(InventarioCristales.TIPO_AGUA, 1);
+                break;
+            case TipoSlime.Tierra:
+                inventarioCristales.AgregarCristal(InventarioCristales.TIPO_TIERRA, 1);
+                break;
+            case TipoSlime.Viento:
+                inventarioCristales.AgregarCristal(InventarioCristales.TIPO_VIENTO, 1);
+                break;
+            case TipoSlime.Fuego:
+                inventarioCristales.AgregarCristal(InventarioCristales.TIPO_FUEGO, 1);
+                break;
         }
     }
 
