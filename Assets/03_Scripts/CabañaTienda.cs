@@ -106,6 +106,12 @@ public class CabanaTienda : MonoBehaviour
     [Header("Sistema de Cristales")]
     public InventarioCristales inventarioCristales;
 
+    [Header("Inventario de Items")]
+    public InventarioItems inventarioItems;
+
+    [Header("Estado Jugador UI")]
+    public EstadoJugadorUI estadoJugadorUI;
+
     [Header("Precios de compra")]
     public int precioBifrost = 300;
     public int precioVida = 150;
@@ -147,6 +153,20 @@ public class CabanaTienda : MonoBehaviour
         if (jugadorDinero.TieneOroSuficiente(precio))
         {
             jugadorDinero.RestarOro(precio);
+
+            if (nombreItem == "Bifrost" && inventarioItems != null)
+            {
+                inventarioItems.AgregarBifrost(1);
+            }
+            else if (nombreItem == "Vida" && estadoJugadorUI != null)
+            {
+                estadoJugadorUI.RestaurarVida();
+            }
+            else if (nombreItem == "Mana" && estadoJugadorUI != null)
+            {
+                estadoJugadorUI.RestaurarMana();
+            }
+
             Debug.Log("Compraste " + nombreItem + " por " + precio + " oro.");
         }
         else
