@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/00_Scenes/Inferno.unity
     guid: 5ab8be0908a6f3b41826caa479bf7be2
+  - enabled: 1
+    path: Assets/00_Scenes/Nubes.unity
+    guid: 8076046b4eb42c542a7aa1b32b52d0b8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

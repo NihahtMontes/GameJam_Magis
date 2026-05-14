@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,22 +14,40 @@ public class PlayerController : MonoBehaviour
     public float rangoCaptura = 1.5f;
     public LayerMask capaSlimes;
 
+    [Header("Inventario y UI")]
+    public List<GameObject> inventarioSlimes = new List<GameObject>();
+    public int slimesEnCorralTotal = 0;
+    public TextMeshProUGUI textoInventario;
+    public TextMeshProUGUI textoCorral;
+
+    [Header("Referencias de Corral")]
+    public Transform puntoAparicionCorral;
+
     [Header("Sistema de Portal")]
     private bool estaEnPortal = false;
     private string nombreEscenaDestino;
 
-    [Header("elementos personaje")]
+    [Header("Audio")]
     public AudioSource fuenteAudio;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        if (fuenteAudio == null)
+        {
+            fuenteAudio = GetComponent<AudioSource>();
+        }
+
+        ActualizarInterfaz();
     }
 
     void Update()
     {
         movimiento.x = Input.GetAxisRaw("Horizontal");
         movimiento.y = Input.GetAxisRaw("Vertical");
+
+        GestionarSonidoCaminata();
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -38,8 +58,6 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(nombreEscenaDestino);
         }
-
-        GestionarSonidoCaminata();
     }
 
     void FixedUpdate()
@@ -51,7 +69,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
         RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero, 0f, capaSlimes);
 
         if (hit.collider != null && hit.collider.CompareTag("Slime"))
@@ -61,9 +78,14 @@ public class PlayerController : MonoBehaviour
             if (distancia <= rangoCaptura)
             {
                 SlimeAI slime = hit.collider.GetComponent<SlimeAI>();
+
                 if (slime != null)
                 {
-                    slime.RecibirIntentoCaptura();
+                    if (slime.RecibirIntentoCaptura())
+                    {
+                        inventarioSlimes.Add(slime.prefabCorralCorrespondiente);
+                        ActualizarInterfaz();
+                    }
                 }
             }
         }
@@ -71,11 +93,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Corral") && inventarioSlimes.Count > 0)
+        {
+            SoltarSlimesEnCorral();
+        }
+
         if (other.CompareTag("Portal"))
         {
             estaEnPortal = true;
+
             TeleportPortal portal = other.GetComponent<TeleportPortal>();
-            if (portal != null) nombreEscenaDestino = portal.nombreEscenaDestino;
+
+            if (portal != null)
+            {
+                nombreEscenaDestino = portal.nombreEscenaDestino;
+            }
         }
     }
 
@@ -84,24 +116,46 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Portal"))
         {
             estaEnPortal = false;
+            nombreEscenaDestino = "";
         }
     }
 
-    void OnDrawGizmosSelected()
+    void SoltarSlimesEnCorral()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, rangoCaptura);
+        foreach (GameObject prefab in inventarioSlimes)
+        {
+            Instantiate(prefab, puntoAparicionCorral.position, Quaternion.identity);
+            slimesEnCorralTotal++;
+        }
+
+        inventarioSlimes.Clear();
+        ActualizarInterfaz();
+    }
+
+    void ActualizarInterfaz()
+    {
+        if (textoInventario != null)
+        {
+            textoInventario.text = "Inventario: " + inventarioSlimes.Count;
+        }
+
+        if (textoCorral != null)
+        {
+            textoCorral.text = "Corral: " + slimesEnCorralTotal;
+        }
     }
 
     private void GestionarSonidoCaminata()
     {
         bool seEstaMoviendo = movimiento.sqrMagnitude > 0.01f;
 
+        if (fuenteAudio == null) return;
+
         if (seEstaMoviendo)
         {
             if (!fuenteAudio.isPlaying)
             {
-                fuenteAudio.loop = true; 
+                fuenteAudio.loop = true;
                 fuenteAudio.Play();
             }
         }
