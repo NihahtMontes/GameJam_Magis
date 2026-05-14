@@ -47,6 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlimeCorral
   velocidad: 2
+  prefabCristal: {fileID: 489795682637632242, guid: 02f58e96c86d64c499767bced4fb3c85, type: 3}
+  tipoSlime: 0
+  maxCristales: 4
+  tiempoGeneracionCristal: 5
 --- !u!212 &8061077545988933295
 SpriteRenderer:
   serializedVersion: 2

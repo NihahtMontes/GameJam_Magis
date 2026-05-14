@@ -6,6 +6,9 @@ public class TeleportPortal : MonoBehaviour
     [Header("Configuración del Portal")]
     public string nombreEscenaDestino = "Inferno"; // El nombre debe ser exacto a tu escena
     public KeyCode teclaInteractuar = KeyCode.F; // La tecla para viajar
+    
+    public bool requiereCristalParaActivar = true;
+    public bool estaActivado = false;
 
     private bool jugadorEstaCerca = false;
 
@@ -15,7 +18,14 @@ public class TeleportPortal : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             jugadorEstaCerca = true;
-            Debug.Log("Jugador cerca del portal. Presiona " + teclaInteractuar + " para viajar.");
+            if (!estaActivado && requiereCristalParaActivar)
+            {
+                Debug.Log("Portal bloqueado. Presiona " + teclaInteractuar + " para activarlo (Requiere 1 Cristal de Portal).");
+            }
+            else
+            {
+                Debug.Log("Jugador cerca del portal. Presiona " + teclaInteractuar + " para viajar.");
+            }
         }
     }
 
@@ -33,7 +43,27 @@ public class TeleportPortal : MonoBehaviour
         // Si el jugador está cerca y presiona la tecla F
         if (jugadorEstaCerca && Input.GetKeyDown(teclaInteractuar))
         {
-            ViajarAEscena();
+            if (!estaActivado && requiereCristalParaActivar)
+            {
+                if (PlayerController.cristalesPortal > 0)
+                {
+                    PlayerController.cristalesPortal--;
+                    estaActivado = true;
+                    Debug.Log("¡Portal Activado!");
+                    
+                    // Actualizar UI del jugador
+                    PlayerController player = FindObjectOfType<PlayerController>();
+                    if (player != null) player.ActualizarInterfaz();
+                }
+                else
+                {
+                    Debug.Log("No tienes Cristales de Portal para activarlo.");
+                }
+            }
+            else
+            {
+                ViajarAEscena();
+            }
         }
     }
 
